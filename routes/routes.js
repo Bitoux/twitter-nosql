@@ -1,4 +1,26 @@
 var Twitter = require('twitter');
+var router = express.Router();
+var assert = require('assert');
+
+// Configure the database
+let dbConfig = require('./config/database.config.js');
+let mongoose = require('mongoose');
+app.set('superSecret', dbConfig.secret);
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(dbConfig.url);
+
+mongoose.connection.on('error', function() {
+    console.log('Could not connect to the database. Exiting now...');
+    process.exit();
+});
+
+mongoose.connection.once('open', function() {
+    console.log("Successfully connected to the database");
+    scrapper.scrapper();
+});
+
 
 var appRouter = function (app) {
     app.get("/", function(req, res) {
@@ -23,6 +45,7 @@ var appRouter = function (app) {
         .catch(function (error) {
             throw error;
         });
+
     });
 }
   

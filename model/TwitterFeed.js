@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'); // Import de la librairie mongoose
 const Schema = mongoose.Schema;
+
 // Définition du schéma
 const TwitterFeed = new Schema({
     name: {type: String, required: true},
@@ -7,4 +8,7 @@ const TwitterFeed = new Schema({
   }, 
   {timestamps: true} // Pour avoir les dates de création et de modification automatiquement gérés par mongoose
 );
+
+let Twitter = mongoose.model('Twitter', TwitterFeed);
+
 module.exports = TodoItemSchema; // Export du schéma
