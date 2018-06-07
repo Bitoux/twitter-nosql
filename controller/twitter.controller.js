@@ -16,7 +16,7 @@ exports.create = function(twitterAPIFeed){
     this.findOne(twitter.id).then(function(data){
         let newTwitter = data;
         console.log('recuperation', newTwitter);
-        if(newTwitter === false){
+        if(newTwitter === true){
             twitter.save(function(err, data){
                 if(err){
                     return 'Some error occured while creating the Pokemon';
@@ -32,10 +32,10 @@ exports.create = function(twitterAPIFeed){
 // Find one Tweet by idTweet
 this.findOne = function(id){
     return new Promise((resolve) => {
-        Twitter.findOne({id: id}, function(err, twitter){
+        Twitter.find({id: id}, function(err, twitter){
             if(err) resolve(false);
             console.log('The tweet:', twitter);
-            (twitter.length === 0) ? resolve(false) : resolve(true);
+            (twitter.length === 0) ? resolve(true) : resolve(false);
         });
     });
 };
@@ -46,7 +46,12 @@ exports.getTweetMoy = function(){
             return false;
         }else{
             let tweetsCount = twitters.length;
-            console.log(twitters);
+            let totalRetweet = 0;
+            twitters.forEach(element => {
+                totalRetweet = totalRetweet + element.retweet_count;
+            });
+            let moyRetweet = totalRetweet / tweetsCount;
+            console.log(moyRetweet);
             return tweetsCount;
         }
     });

@@ -55,8 +55,9 @@ var appRouter = function (app) {
 
     });
 
-    app.get('/tweet-moy', function(req, res){
+    app.get('/tweets-moy', function(req, res){
         TwitterController.getTweetMoy();
+        res.status(200).send("damnnn");
     });
 }
   
