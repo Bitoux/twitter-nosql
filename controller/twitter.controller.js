@@ -24,7 +24,7 @@ exports.create = function(twitterAPIFeed){
                     console.log('saved');
                     return data;
                 }
-            });   
+            });
         }
     });
 }
@@ -41,42 +41,60 @@ this.findOne = function(id){
 };
 
 exports.getTweetMoy = function(){
-    Twitter.find(function(err, twitters){
-        if(err){
-            return false;
-        }else{
-            let tweetsCount = twitters.length;
-            let totalRetweet = 0;
-            twitters.forEach(element => {
-                totalRetweet = totalRetweet + element.retweet_count;
-            });
-            let moyRetweet = totalRetweet / tweetsCount;
-            console.log(moyRetweet);
-            return tweetsCount;
-        }
+    return new Promise((resolve) => {
+        Twitter.find(function(err, twitters){
+            if(err){
+                return false;
+            }else{
+                let tweetsCount = twitters.length;
+                let totalRetweet = 0;
+                let totalFollowers = 0;
+                twitters.forEach(element => {
+                    totalRetweet = totalRetweet + element.retweet_count;
+                    totalFollowers = totalFollowers + element.followers_count;
+                });
+                let moyRetweet = totalFollowers / tweetsCount;
+                let moyFollowers = totalRetweet / tweetsCount;
+                let moyCoverage = moyRetweet * moyFollowers + totalFollowers;
+                let tweetsInfo = {
+                    totalTweets: tweetsCount,
+                    moyRetweet: moyRetweet,
+                    totalFollowers: totalFollowers,
+                    moyFollowers: moyFollowers,
+                    moyCoverage: moyCoverage
+                }
+                resolve(tweetsInfo);
+            }
+        });
     });
 };
 
 exports.getNbPays = function(){
-    Twitter.find(function(err, twitters){
-        if(err){
-            return false;
-        } else {
-            let totalNbPays = 0;
-            let countries = [];
-            let totalTweetParPays = 0;
-            twitters.forEach(element => {
-                if (element.country == '') {
-                    totalTweetParPays = totalTweetParPays + 1;
-                } else {
-                    countries.push({"name": element.country, "value": totalTweetParPays});
-                }
-            });
-            countries.push({"name": "Country is not defined", value: totalTweetParPays});
-            console.log(countries);
+    return new Promise((resolve) => {
+        Twitter.find(function(err, twitters){
+            if(err){
+                return false;
+            } else {
+                let totalNbPays = 0;
+                let countries = [];
+                let totalTweetParPays = 0;
+                twitters.forEach(element => {
+                    if (element.country == '') {
+                        totalTweetParPays = totalTweetParPays + 1;
+                    } else {
+                        countries.push({"name": element.country, "value": 1});
+                    }
+                    totalNbPays = totalNbPays + 1;
+                });
+                countries.push({"name": "Country is not defined", value: totalTweetParPays});
+                console.log(countries);
             
-            return countries;
-            return totalNbPays;
-        }
+                let countryInfos = {
+                    countries: countries,
+                    totalNbPays: totalNbPays
+                }
+                resolve(countryInfos);
+            }
+        })
     })
 }

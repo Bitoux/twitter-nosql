@@ -56,14 +56,17 @@ var appRouter = function (app) {
     });
 
     app.get('/tweets-moy', function(req, res){
-        TwitterController.getTweetMoy();
-        res.status(200).send("damnnn");
+        let tweetInfos = TwitterController.getTweetMoy().then(function(data){
+            console.log(data);
+            res.status(200).send(data);
+        });
     });
 
     app.get('/nb-pays', function(req, res){
-        TwitterController.getNbPays();
-        res.status(200).send("nb pays ok");
+        let countryInfos = TwitterController.getNbPays().then(function(data){
+            res.status(200).send(data);
+        })
     })
 }
-  
+
 module.exports = appRouter;
