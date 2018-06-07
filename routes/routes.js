@@ -1,9 +1,12 @@
 var Twitter = require('twitter');
+const express = require('express');
 var router = express.Router();
 var assert = require('assert');
 
+let app = express();
+
 // Configure the database
-let dbConfig = require('./config/database.config.js');
+let dbConfig = require('../config/database.config.js');
 let mongoose = require('mongoose');
 app.set('superSecret', dbConfig.secret);
 
