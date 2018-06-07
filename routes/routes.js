@@ -1,7 +1,8 @@
-var Twitter = require('twitter');
+const Twitter = require('twitter');
 const express = require('express');
-var router = express.Router();
-var assert = require('assert');
+const router = express.Router();
+const assert = require('assert');
+const TwitterController = require('../controller/twitter.controller');
 
 let app = express();
 
@@ -21,7 +22,6 @@ mongoose.connection.on('error', function() {
 
 mongoose.connection.once('open', function() {
     console.log("Successfully connected to the database");
-    scrapper.scrapper();
 });
 
 
@@ -40,10 +40,14 @@ var appRouter = function (app) {
             access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
         });
 
-        client.get('search/tweets', {q: 'NBAFinals'})
-        .then(function (tweet) {
-            console.log(tweet);
-            res.status(200).send(tweet);
+        client.get('search/tweets', {q: 'WorldCup'})
+        .then(function (tweets) {
+            let tweetArray = [];
+            tweets.statuses.forEach(tweet => {
+                let newTweet = TwitterController.create(tweet);
+                tweetArray.push();
+            });
+            res.status(200).send(tweetArray);
         })
         .catch(function (error) {
             throw error;
