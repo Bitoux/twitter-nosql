@@ -66,16 +66,14 @@ exports.getNbPays = function(){
             let countries = [];
             let totalTweetParPays = 0;
             twitters.forEach(element => {
-                if (countries.includes(element.country) === false){
-                    countries.push([element.country, totalTweetParPays]);
-                    totalNbPays = totalNbPays + 1;
+                if (element.country == '') {
+                    totalTweetParPays = totalTweetParPays + 1;
                 } else {
-                    countries[count] = [element.country, totalTweetParPays + 1];
+                    countries.push({"name": element.country, "value": totalTweetParPays});
                 }
-                let count = 0;
-            })
+            });
+            countries.push({"name": "Country is not defined", value: totalTweetParPays});
             console.log(countries);
-            console.log(totalNbPays);
             
             return countries;
             return totalNbPays;
