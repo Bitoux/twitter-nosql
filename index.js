@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const routes = require("./routes/routes.js");
 const app = express();
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
