@@ -72,6 +72,8 @@ exports.getNbPays = function(){
             })
             console.log(countries);
             console.log(totalNbPays);
+            return countries;
+            return totalNbPays;
         }
     })
 }
