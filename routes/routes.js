@@ -59,6 +59,11 @@ var appRouter = function (app) {
         TwitterController.getTweetMoy();
         res.status(200).send("damnnn");
     });
+
+    app.get('/nb-pays', function(req, res){
+        TwitterController.getNbPays();
+        res.status(200).send("nb pays ok");
+    })
 }
   
 module.exports = appRouter;

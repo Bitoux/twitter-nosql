@@ -56,3 +56,22 @@ exports.getTweetMoy = function(){
         }
     });
 };
+
+exports.getNbPays = function(){
+    Twitter.find(function(err, twitters){
+        if(err){
+            return false;
+        } else {
+            let totalNbPays = 0;
+            let countries = [];
+            twitters.forEach(element => {
+                if (countries.includes(element.country) === false){
+                    countries.push(element.country);
+                    totalNbPays = totalNbPays + 1;
+                }
+            })
+            console.log(countries);
+            console.log(totalNbPays);
+        }
+    })
+}
