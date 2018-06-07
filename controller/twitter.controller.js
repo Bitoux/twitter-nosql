@@ -41,18 +41,23 @@ this.findOne = function(id){
 };
 
 exports.getTweetMoy = function(){
-    Twitter.find(function(err, twitters){
-        if(err){
-            return false;
-        }else{
-            let tweetsCount = twitters.length;
-            let totalRetweet = 0;
-            twitters.forEach(element => {
-                totalRetweet = totalRetweet + element.retweet_count;
-            });
-            let moyRetweet = totalRetweet / tweetsCount;
-            console.log(moyRetweet);
-            return tweetsCount;
-        }
+    return new Promise((resolve) => {
+        Twitter.find(function(err, twitters){
+            if(err){
+                return false;
+            }else{
+                let tweetsCount = twitters.length;
+                let totalRetweet = 0;
+                twitters.forEach(element => {
+                    totalRetweet = totalRetweet + element.retweet_count;
+                });
+                let moyRetweet = totalRetweet / tweetsCount;
+                let tweetsInfo = {
+                    totalTweets: tweetsCount,
+                    moyRetweet: moyRetweet
+                }
+                resolve(tweetsInfo);
+            }
+        });
     });
 };
