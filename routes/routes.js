@@ -54,6 +54,10 @@ var appRouter = function (app) {
         });
 
     });
+
+    app.get('/tweet-moy', function(req, res){
+        TwitterController.getTweetMoy();
+    });
 }
   
 module.exports = appRouter;

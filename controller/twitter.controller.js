@@ -32,12 +32,22 @@ exports.create = function(twitterAPIFeed){
 // Find one Tweet by idTweet
 this.findOne = function(id){
     return new Promise((resolve) => {
-        Twitter.find({id: id}, function(err, twitter){
+        Twitter.findOne({id: id}, function(err, twitter){
             if(err) resolve(false);
             console.log('The tweet:', twitter);
             (twitter.length === 0) ? resolve(false) : resolve(true);
         });
     });
+};
 
-    
+exports.getTweetMoy = function(){
+    Twitter.find(function(err, twitters){
+        if(err){
+            return false;
+        }else{
+            let tweetsCount = twitters.length;
+            console.log(twitters);
+            return tweetsCount;
+        }
+    });
 };
