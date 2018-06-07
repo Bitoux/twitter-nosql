@@ -24,7 +24,7 @@ exports.create = function(twitterAPIFeed){
                     console.log('saved');
                     return data;
                 }
-            });   
+            });
         }
     });
 }
@@ -48,16 +48,24 @@ exports.getTweetMoy = function(){
             }else{
                 let tweetsCount = twitters.length;
                 let totalRetweet = 0;
+                let totalFollowers = 0;
                 twitters.forEach(element => {
                     totalRetweet = totalRetweet + element.retweet_count;
+                    totalFollowers = totalFollowers + element.followers_count;
                 });
-                let moyRetweet = totalRetweet / tweetsCount;
+                let moyRetweet = totalFollowers / tweetsCount;
+                let moyFollowers = totalRetweet / tweetsCount;
+                let moyCoverage = moyRetweet * moyFollowers + totalFollowers;
                 let tweetsInfo = {
                     totalTweets: tweetsCount,
-                    moyRetweet: moyRetweet
+                    moyRetweet: moyRetweet,
+                    totalFollowers: totalFollowers,
+                    moyFollowers: moyFollowers,
+                    moyCoverage: moyCoverage
                 }
                 resolve(tweetsInfo);
             }
         });
     });
 };
+
