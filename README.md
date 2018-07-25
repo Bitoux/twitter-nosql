@@ -5,4 +5,4 @@ A twitter scrapper for Big Data - ESGI using Express
 npm install
 
 # Serve
-node app.js
+node index.js
